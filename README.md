@@ -27,6 +27,7 @@ To install this project, download or clone the repository to your local machine:
 
 Then, navigate to the project directory and install the dependencies:
 
+    cd mylist
     pip install -r requirements.txt
     
 Create a new database by running the following command: 
