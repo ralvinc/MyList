@@ -1,0 +1,17 @@
+{% extends 'base/layout.html' %} 
+
+{% block content %}
+
+<div>
+  <button class="back-button">
+    <a href="{% url 'home' %}">Back</a>
+  </button>
+</div>
+
+<form method="POST">
+  {% csrf_token %}
+  <p class="delete">Are you sure you want to delete "<b>{{ task }}</b>"?</p>
+  <input type="submit" value="Confirm" />
+</form>
+
+{% endblock %}

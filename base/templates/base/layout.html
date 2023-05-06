@@ -1,0 +1,478 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyList</title>
+
+    <link rel="shortcut icon" href="static/logo-black.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+
+      :root {
+        --color-1: #fc4445;
+        --color-2: #3feee6;
+        --color-3: #55bcc9;
+        --color-4: #97caef;
+        --color-5: #cafafe;
+        --color-6: #272727;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Nunito Sans", sans-serif;
+      }
+
+      body {
+        background-image: linear-gradient(var(--color-4), var(--color-5));
+        min-height: 100vh;
+        overflow: auto;
+      }
+
+      .body {
+        max-width: 550px;
+        margin: auto;
+        margin-top: 50px;
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+      }
+
+      @media (max-width: 570px) {
+        .body {
+          margin-top: 50px;
+          margin-left: 20px;
+          margin-right: 20px;
+          -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+          box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--color-6);
+      }
+
+      a:hover {
+        color: var(--color-5);
+      }
+
+      /* Header */
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(var(--color-1), var(--color-3));
+        padding: 1.5rem 1rem;
+        color: var(--color-6);
+        border-radius: 10px 10px 0 0;
+      }
+
+      .header-container .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-container .logo img {
+        width: 3rem;
+        object-fit: contain;
+        margin-right: 0.5rem;
+      }
+
+      .header-container a h1 {
+        font-size: 3rem;
+      }
+
+      .title:hover {
+        color: var(--color-6);
+      }
+
+      .user-container {
+        display: grid;
+        text-align: right;
+        padding-right: 1rem;
+      }
+
+      /* Homepage View */
+
+      .main-content {
+        background-color: var(--color-3);
+        padding-bottom: 1rem;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 50px;
+      }
+
+      .search-add-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.2rem 1rem;
+      }
+
+      #search-box {
+        appearance: none;
+        background: none;
+        outline: none;
+        border: none;
+        display: block;
+        width: 15rem;
+        padding: 1rem;
+        border-radius: 20px;
+        background-color: var(--color-3);
+        transition: 0.4s;
+        font-size: 1rem;
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+      }
+
+      #search-box::placeholder {
+        color: var(--color-6);
+      }
+
+      #search-box:focus,
+      #search-box:active {
+        background-color: var(--color-2);
+        color: var(--color-6);
+      }
+
+      .search-add-container a {
+        font-size: 3rem;
+      }
+
+      /* Homepage View - List */
+
+      .body-container center {
+        font-size: 1rem;
+        padding: 1rem;
+      }
+
+      .body-container .uncompleted-item-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 0.5rem 1rem;
+        appearance: none;
+        background: none;
+        outline: none;
+        border: none;
+        width: 95%;
+        border-radius: 20px;
+        background-color: var(--color-2);
+        color: var(--color-6);
+        margin: 1rem auto;
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        transition: 0.4s;
+      }
+
+      .body-container .completed-item-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 0.5rem 1rem;
+        appearance: none;
+        background: none;
+        outline: none;
+        border: none;
+        width: 95%;
+        border-radius: 20px;
+        background-color: var(--color-3);
+        color: var(--color-6);
+        margin: 1rem auto;
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        transition: 0.4s;
+      }
+
+      .body-container .uncompleted-item-container a {
+        font-size: 1.25rem;
+      }
+
+      .body-container .completed-item-container a {
+        text-decoration: line-through;
+        font-size: 1.25rem;
+      }
+
+      .body-container .uncompleted-item-container a:hover,
+      .body-container .completed-item-container a:hover {
+        color: var(--color-5);
+      }
+
+      .body-container .uncompleted-item-container .watch,
+      .body-container .completed-item-container .watch {
+        position: absolute;
+        top: -12px;
+        left: 20px;
+        width: 3rem;
+        text-align: center;
+        font-size: 0.75rem;
+        background-color: var(--color-1);
+        border-radius: 10px;
+        padding: 0.25rem;
+        font-weight: bold;
+      }
+
+      .body-container .uncompleted-item-container .read-1,
+      .body-container .completed-item-container .read-1 {
+        position: absolute;
+        top: -12px;
+        left: 20px;
+        width: 3rem;
+        text-align: center;
+        font-size: 0.75rem;
+        background-color: var(--color-4);
+        border-radius: 10px;
+        padding: 0.25rem;
+        font-weight: bold;
+      }
+
+      .body-container .uncompleted-item-container .read-2,
+      .body-container .completed-item-container .read-2 {
+        position: absolute;
+        top: -12px;
+        left: 73px;
+        width: 3rem;
+        text-align: center;
+        font-size: 0.75rem;
+        background-color: var(--color-4);
+        border-radius: 10px;
+        padding: 0.25rem;
+        font-weight: bold;
+      }
+
+      /* Add to List View */
+
+      .back-button {
+        margin: 1em;
+        margin-bottom: 0;
+        padding: 0.5em 1em;
+        width: 7rem;
+        border-radius: 20px;
+        border: none;
+        transition: 0.5s;
+        cursor: pointer;
+        text-align: center;
+        background-color: var(--color-2);
+      }
+
+      .back-button:hover {
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+      }
+
+      .back-button:active {
+        transform: scale(1.05);
+      }
+
+      .back-button a {
+        font-size: 1.25rem;
+        color: var(--color-6);
+      }
+
+      /* Add to List View - Form */
+      .task-form-container {
+        padding: 1rem 1.5rem;
+      }
+
+      @media (min-width: 481px) {
+        .task-form-container p {
+          display: grid;
+          grid-template-columns: 125px 1fr;
+          justify-content: left;
+          margin: 1rem 0;
+        }
+
+        .login-container .login {
+          display: grid;
+          grid-template-columns: 100px 1fr;
+          margin: 1rem;
+        }
+
+        .login-container .register {
+          display: grid;
+          grid-template-columns: 200px 1fr;
+          margin: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .task-form-container p {
+          display: grid;
+          margin: 1rem 0;
+        }
+
+        .task-form-container label {
+          padding: 0.5rem 0;
+        }
+      }
+
+      input[type="text"],
+      input[type="password"],
+      textarea {
+        border: 1px solid var(--color-6);
+        border-radius: 5px;
+        padding: 0.5rem;
+        background-color: white;
+        font-size: 1rem;
+      }
+
+      input[type="text"]::placeholder,
+      input[type="password"]::placeholder {
+        color: var(--color-6);
+        font-size: 1rem;
+      }
+
+      input[type="checkbox"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--color-6);
+        border-radius: 3px;
+        outline: none;
+        margin: 0.5rem 0;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"]:checked {
+        background-color: var(--color-6);
+        border-radius: 3px;
+      }
+
+      select {
+        width: 5rem;
+        color: var(--color-6);
+        border-radius: 5px;
+        outline: none;
+        appearance: none;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid var(--color-6);
+      }
+
+      select option {
+        background-color: white;
+        color: var(--color-6);
+      }
+
+      label {
+        padding: 0.5rem;
+      }
+
+      input[type="submit"] {
+        width: 8rem;
+        display: block;
+        margin: auto;
+        font-size: 1.25rem;
+        border-radius: 20px;
+        border: none;
+        transition: 0.5s;
+        cursor: pointer;
+        background-color: var(--color-2);
+        padding: 0.5rem 1rem;
+      }
+
+      input[type="submit"]:hover {
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+      }
+
+      input[type="submit"]:active {
+        transform: scale(1.05);
+      }
+
+      /* Delete View */
+
+      .delete {
+        margin: 1rem;
+        text-align: center;
+      }
+
+      /* Login-Register View */
+
+      .login-container {
+        padding: 1rem 2.5rem;
+      }
+
+      @media (min-width: 546px) {
+        .login-container .login {
+          display: grid;
+          grid-template-columns: 100px 1fr;
+          margin: 1rem;
+        }
+
+        .login-container .register {
+          display: grid;
+          grid-template-columns: 200px 1fr;
+          margin: 1rem;
+        }
+      }
+
+      @media (max-width: 545px) {
+        .login-container .login {
+          display: grid;
+          margin: 1rem;
+        }
+
+        .login-container .register {
+          display: grid;
+          margin: 1rem;
+        }
+
+        .login-container label {
+          padding: 0.5rem 0;
+        }
+      }
+
+      .messages {
+        list-style: none;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-style: italic;
+      }
+
+      .login-footer {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .login-footer a {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <!-- Header -->
+      <div class="header-container">
+        <div class="logo">
+          <img src="{% static 'logo-black.png' %}" />
+          <a href="{% url 'home' %}" class="title"><h1>MyList</h1></a>
+        </div>
+        <div class="user-container">
+          {% if request.user.is_authenticated %}
+          <span><b>{{ request.user|title }}</b></span>
+          <a href="{% url 'logout' %}"><i>Logout</i></a>
+          {% else %}
+          <a href="{% url 'login' %}"><i>Login</i></a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="main-content">{% block content %} {% endblock %}</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'base/layout.html' %} 
+
+{% block content %}
+
+<!-- Login -->
+{% if page == 'login' %}
+<div>
+  <div class="login-container">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="login">
+        <label for="">Username:</label>
+        <input type="text" name="username" placeholder="Enter username" />
+      </div>
+
+      <div class="login">
+        <label for="">Password:</label>
+        <input type="password" name="password" placeholder="Enter password" />
+      </div>
+
+      <input type="submit" value="Login" />
+    </form>
+  </div>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="login-footer">
+    <p>No account yet?</p>
+    <a href="{% url 'register' %}">Sign Up</a>
+  </div>
+</div>
+
+<!-- Register -->
+{% else %}
+<div>
+  <div class="login-container">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="register">
+        <label>{{ form.username.label }}:</label>
+        {{ form.username }}
+      </div>
+
+      <div class="register">
+        <label>{{ form.password1.label }}:</label>
+        {{ form.password1 }}
+      </div>
+
+      <div class="register">
+        <label>{{ form.password2.label }}:</label>
+        {{ form.password2 }}
+      </div>
+
+      <input type="submit" value="Register" />
+    </form>
+  </div>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="login-footer">
+    <p>Already signed up?</p>
+    <a href="{% url 'login' %}">Login</a>
+  </div>
+</div>
+{% endif %} {% endblock %}

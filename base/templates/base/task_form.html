@@ -1,0 +1,18 @@
+{% extends 'base/layout.html' %} 
+
+{% block content %}
+
+<div>
+  <button class="back-button">
+    <a href="{% url 'home' %}">Back</a>
+  </button>
+</div>
+
+<div class="task-form-container">
+  <form method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Confirm" />
+  </form>
+</div>
+
+{% endblock %}

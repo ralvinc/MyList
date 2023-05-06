@@ -1,0 +1,51 @@
+{% extends 'base/layout.html' %} 
+
+{% block content %}
+
+<div class="search-add-container">
+  <form action="{% url 'home' %}" method="GET">
+    <input id="search-box" type="text" name="q" placeholder="Search..." />
+  </form>
+
+  <a href="{% url 'create-task' %}">&#43;</a>
+</div>
+
+<!-- List -->
+<div class="body-container">
+  {% if request.user.is_authenticated %} {% if task_total_count == 0 %}
+  <center>Your list is currently empty.</center>
+  {% else %}
+  <center>
+    You have <b><i>{{ watch_count }}</i></b> show{{ watch_count|pluralize:"s" }}
+    to watch and <b><i>{{ read_count }}</i></b> manga{{ read_count|pluralize:"s" }}
+    /light novel{{ read_count|pluralize:"s"}} to read.
+  </center>
+  {% for task in tasks %} {% if task.completed == False %}
+  <div class="uncompleted-item-container">
+    <a href="{% url 'update-task' task.id %}">{{ task }}</a>
+    <a href="{% url 'delete-task' task.id %}">
+      <i class="fa">&#xf014;</i>
+    </a>
+
+    {% if task.watch_or_read.action == 'Watch' %}
+    <label class="watch">Watch</label>
+    {% elif task.watch_or_read.action == 'Read' %}
+    <label class="read-1">Read</label>
+    {% else %}
+    <label class="watch">Watch</label>
+    <label class="read-2">Read</label>
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="completed-item-container">
+    <a href="{% url 'update-task' task.id %}">{{ task }}</a>
+    <a href="{% url 'delete-task' task.id %}">
+      <i class="fa">&#xf014;</i>
+    </a>
+  </div>
+  {% endif %} {% empty %}
+  <center>No results found.</center>
+  {% endfor %} {% endif %} {% endif %}
+</div>
+
+{% endblock %}
